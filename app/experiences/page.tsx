@@ -1,3 +1,4 @@
+import { ParallaxImage } from "@/components/parallax-image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -9,6 +10,7 @@ export default function ExperiencesPage() {
   return (
     <>
       <section className="page-hero directory-hero">
+        <div className="hero-photo" aria-hidden="true"><ParallaxImage src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=2000&q=80" alt="" speed={14} /></div>
         <div><span className="eyebrow">The experience directory</span><h1>Fourteen ways to<br/><em>move the room.</em></h1></div>
         <p>Explore premium capture technology, social-first video, AI transformations and immersive guest interactions — each ready to become unmistakably yours.</p>
         <span className="page-number">E / 14</span>

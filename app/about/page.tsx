@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/reveal";
+import { ParallaxImage } from "@/components/parallax-image";
 
 export const metadata: Metadata = { title: "About", description: "Meet ECHO TECH EVENTS, a Dubai-based event technology and experiential entertainment company." };
 
@@ -17,6 +17,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="page-hero about-hero">
+        <div className="hero-photo" aria-hidden="true"><ParallaxImage src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=2000&q=80" alt="" speed={14} /></div>
         <div><span className="eyebrow">About / ECHO TECH EVENTS</span><h1>We turn event<br/>technology into<br/><em>human moments.</em></h1></div>
         <p>Based in Dubai, ECHO TECH EVENTS creates premium photo, video, AI and interactive experiences for ambitious events across the UAE.</p>
         <span className="page-number">A / 01</span>
@@ -26,7 +27,7 @@ export default function AboutPage() {
         <div className="statement-aside"><span className="eyebrow dark">Our point of view</span><p>We bring together strong visual presentation, guest interaction and event-minded execution. The result is an experience that feels considered from first glance to final share.</p></div>
       </section>
       <section className="about-image-band">
-        <Image src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2200&q=90" alt="Demonstration image of an elevated event environment" fill sizes="100vw" />
+        <ParallaxImage src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2200&q=90" alt="Demonstration image of an elevated event environment" speed={12} />
         <span className="demo-tag">Demo media / art direction reference</span>
         <div><span>Dubai based</span><span>UAE focused</span><span>Experience led</span></div>
       </section>
@@ -37,7 +38,7 @@ export default function AboutPage() {
       <section className="brand-position">
         <div className="brand-position-copy"><span className="eyebrow dark">Built for the room</span><h2>Corporate clarity.<br/>Creative energy.<br/><em>Luxury restraint.</em></h2><p>From board-level gatherings to public-facing activations, the visual language can flex while the standard of presentation stays consistent.</p></div>
         <div className="brand-position-visual">
-          <Image src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=90" alt="Demonstration visual of event lighting" fill sizes="50vw" />
+          <ParallaxImage src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=90" alt="Demonstration visual of event lighting" speed={8} sizes="50vw" />
           <span>Concept image</span>
         </div>
       </section>

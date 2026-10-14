@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ParallaxImage } from "@/components/parallax-image";
 import { useState } from "react";
 import { Maximize2, X } from "lucide-react";
 import { portfolioItems } from "@/lib/data";
@@ -15,8 +16,8 @@ export function PortfolioFilter() {
       <div className="filter-bar portfolio-filters">{categories.map((cat) => <button key={cat} className={active === cat ? "active" : ""} onClick={() => setActive(cat)}>{cat}</button>)}</div>
       <div className="portfolio-grid">
         {items.map((item, index) => (
-          <button className={`portfolio-card p-${index + 1}`} key={item.title} onClick={() => setSelected(item)}>
-            <Image src={item.image} alt={`Demonstration visual: ${item.title}`} fill sizes="(max-width: 768px) 100vw, 50vw" />
+          <button data-cursor="view" className={`portfolio-card p-${index + 1}`} key={item.title} onClick={() => setSelected(item)}>
+            <ParallaxImage src={item.image} alt={`Demonstration visual: ${item.title}`} speed={5} sizes="(max-width: 768px) 100vw, 50vw" />
             <span className="demo-tag">Demo concept</span><span className="portfolio-meta">{item.category}<strong>{item.title}</strong></span><Maximize2 />
           </button>
         ))}

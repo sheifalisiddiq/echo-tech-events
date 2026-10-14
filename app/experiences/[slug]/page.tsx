@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ParallaxImage } from "@/components/parallax-image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowDown, ArrowUpRight, Check } from "lucide-react";
@@ -57,7 +58,7 @@ export default async function ExperienceDetail({ params }: PageProps) {
   return (
     <>
       <section className="service-hero">
-        <Image src={item.image} alt={`Demonstration visual for ${item.title}`} fill priority sizes="100vw" />
+        <ParallaxImage src={item.image} alt={`Demonstration visual for ${item.title}`} speed={12} priority />
         <div className="service-hero-overlay" />
         <div className="service-hero-content"><span className="eyebrow">{item.category} experience / Dubai UAE</span><h1>{item.title}</h1><p>{content.intro}</p><Link href="/contact" className="button button-light">Request a quote <ArrowUpRight /></Link></div>
         <span className="demo-disclosure">Demonstration media · not an ECHO project</span>
@@ -68,7 +69,7 @@ export default async function ExperienceDetail({ params }: PageProps) {
         <p>{content.intro}</p>
       </section>
       <section className="service-feature-band">
-        <div className="service-feature-image"><Image src={item.image} alt={`Concept detail for ${item.title}`} fill sizes="55vw" /><span>Concept visual</span></div>
+        <div className="service-feature-image"><ParallaxImage src={item.image} alt={`Concept detail for ${item.title}`} speed={8} sizes="55vw" /><span>Concept visual</span></div>
         <div className="feature-checklist"><span className="eyebrow">Key features</span><h2>Made to look as good<br/>as it feels.</h2>{content.features.map((x) => <div key={x}><Check/><span>{x}</span></div>)}</div>
       </section>
       <section className="customization-section">

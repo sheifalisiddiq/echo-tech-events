@@ -1,8 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import "lenis/dist/lenis.css";
 import "./globals.css";
+import "./motion.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Preloader } from "@/components/preloader";
+import { SmoothScroll } from "@/components/smooth-scroll";
+import { Cursor } from "@/components/cursor";
+import { Interactions } from "@/components/interactions";
+import { ScrollProgress } from "@/components/scroll-progress";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://echotechevents.example"),
@@ -24,6 +30,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <a href="#main" className="skip-link">Skip to content</a>
         <Preloader />
+        <SmoothScroll />
+        <Interactions />
+        <Cursor />
+        <ScrollProgress />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />

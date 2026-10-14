@@ -1,3 +1,4 @@
+import { ParallaxImage } from "@/components/parallax-image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -9,6 +10,7 @@ export default function PortfolioPage() {
   return (
     <>
       <section className="page-hero portfolio-page-hero">
+        <div className="hero-photo" aria-hidden="true"><ParallaxImage src="https://images.unsplash.com/photo-1496337589254-7e19d01cec44?auto=format&fit=crop&w=2000&q=80" alt="" speed={14} /></div>
         <div><span className="eyebrow">Selected work / Demo direction</span><h1>Experiences,<br/><em>in their element.</em></h1></div>
         <p>This portfolio uses clearly marked concept imagery to demonstrate the intended presentation until approved ECHO project photography and films are supplied.</p>
         <span className="page-number">P / 06</span>
