@@ -10,7 +10,9 @@ import { onEchoReady } from "@/lib/scroll";
 
 const HeroField = dynamic(() => import("@/components/three/hero-field"), { ssr: false });
 
-export function Hero({ image }: { image: string }) {
+type HeroImage = { readonly desktop: string; readonly mobile: string };
+
+export function Hero({ images }: { images: readonly [HeroImage, HeroImage, HeroImage, HeroImage, HeroImage] }) {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -28,12 +30,12 @@ export function Hero({ image }: { image: string }) {
 
         gsap.set(lines, { yPercent: 115 });
         gsap.set(fades, { autoAlpha: 0, y: 26 });
-        gsap.set(bg, { scale: 1.2 });
+        gsap.set(bg, { scale: 1.12 });
 
         const off = onEchoReady(() => {
           gsap
             .timeline()
-            .to(bg, { scale: 1.06, duration: 2.4, ease: "power3.out" }, 0)
+            .to(bg, { scale: 1, duration: 2.4, ease: "power3.out" }, 0)
             .to(lines, { yPercent: 0, duration: 1.25, stagger: 0.13, ease: "power4.out" }, 0.15)
             .to(fades, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out" }, 0.55);
         });
@@ -77,8 +79,12 @@ export function Hero({ image }: { image: string }) {
     <section className="hero" ref={root} data-chapter="Arrive">
       <div className="hero-layers">
         <div className="hero-bg">
-          <Image src={image} alt="Demonstration image of a cinematic event environment with blue lighting" fill priority sizes="100vw" />
-          <video className="hero-video" src="/hero-reel.mp4" poster="/hero-reel-poster.jpg" autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
+          {images.map((image, index) => (
+            <div className={`hero-frame hero-frame-${index + 1}`} key={image.desktop}>
+              <Image className="hero-desktop" src={image.desktop} alt={index === 0 ? "Custom photo booth at a corporate event" : ""} fill priority={index === 0} sizes="(max-width: 760px) 1px, 100vw" />
+              <Image className="hero-mobile" src={image.mobile} alt={index === 0 ? "Custom photo booth at a corporate event" : ""} fill priority={index === 0} sizes="(max-width: 760px) 100vw, 1px" />
+            </div>
+          ))}
         </div>
         <div className="hero-streaks" />
         <HeroField />
@@ -95,7 +101,7 @@ export function Hero({ image }: { image: string }) {
         <div className="hero-bottom">
           <p data-hero-fade>We create memorable, branded and customized event moments through premium capture technology and interactive entertainment.</p>
           <div className="hero-actions" data-hero-fade>
-            <Link className="button button-light" href="/experiences">Explore experiences <ArrowUpRight /></Link>
+            <Link className="button button-light" href="/portfolio">View our work <ArrowUpRight /></Link>
             <Link className="button button-ghost" href="/contact">Get a quote</Link>
             <Link className="round-link" href="/contact" aria-label="WhatsApp enquiry"><MessageCircle /> <span>WhatsApp<br />via enquiry</span></Link>
           </div>

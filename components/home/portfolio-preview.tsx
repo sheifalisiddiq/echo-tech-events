@@ -38,7 +38,7 @@ export function PortfolioPreview() {
   return (
     <section className="section portfolio-preview" data-chapter="Experience">
       <Reveal className="section-heading split-heading">
-        <div><span className="chapter-tag">04 / Selected work</span><h2>Moments with<br /><em>presence.</em></h2></div>
+        <div><span className="chapter-tag">02 / Selected work</span><h2>Moments with<br /><em>presence.</em></h2></div>
         <div>
           <p>Real footage and guest screens from a delivered {scribbleBooth.title} activation.</p>
           <Link href="/portfolio" className="text-link">View full portfolio <ArrowUpRight /></Link>

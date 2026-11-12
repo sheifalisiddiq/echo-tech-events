@@ -1,7 +1,4 @@
-"use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Star } from "lucide-react";
+import { ArrowUpRight, Star } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import type { Review } from "@/lib/data";
 
@@ -18,132 +15,58 @@ function GoogleG() {
 
 function Stars({ count }: { count: number }) {
   return (
-    <span className="stars" role="img" aria-label={`${count} out of 5 stars`}>
-      {Array.from({ length: 5 }, (_, i) => (i < count ? <Star key={i} /> : <Star key={i} style={{ opacity: 0.25 }} />))}
+    <span className="rv-stars" role="img" aria-label={`${count} out of 5 stars`}>
+      {Array.from({ length: 5 }, (_, i) => <Star key={i} style={i < count ? undefined : { opacity: 0.25 }} />)}
     </span>
   );
 }
 
 const initials = (name: string) => name.replace(/^Dr\.?\s+/i, "").split(" ").slice(0, 2).map((part) => part[0]).join("").toUpperCase();
 
-/** Google reviews as a 3D coverflow: swipe, drag, arrows or autoplay. The owner reply slides up on request. */
-export function ReviewsFlow({ reviews }: { reviews: Review[] }) {
-  const [active, setActive] = useState(0);
-  const [replyOpen, setReplyOpen] = useState(false);
-  const root = useRef<HTMLDivElement>(null);
-  const paused = useRef(false);
-  const inView = useRef(false);
-  const count = reviews.length;
-
-  const go = useCallback((index: number) => {
-    setReplyOpen(false);
-    setActive(Math.max(0, Math.min(count - 1, index)));
-  }, [count]);
-
-  useEffect(() => {
-    const el = root.current;
-    if (!el || count < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const observer = new IntersectionObserver(([entry]) => { inView.current = entry.isIntersecting; }, { threshold: 0.4 });
-    observer.observe(el);
-    const id = window.setInterval(() => {
-      if (inView.current && !paused.current && !document.hidden) setActive((a) => (a + 1) % count);
-    }, 7000);
-    return () => { observer.disconnect(); window.clearInterval(id); };
-  }, [count]);
-
-  useEffect(() => {
-    const el = root.current;
-    if (!el) return;
-    let startX = 0;
-    let tracking = false;
-    const onDown = (event: PointerEvent) => {
-      if ((event.target as HTMLElement).closest("button, a")) return;
-      tracking = true;
-      startX = event.clientX;
-    };
-    const onUp = (event: PointerEvent) => {
-      if (!tracking) return;
-      tracking = false;
-      const dx = event.clientX - startX;
-      if (Math.abs(dx) > 55) go(active + (dx < 0 ? 1 : -1));
-    };
-    el.addEventListener("pointerdown", onDown);
-    window.addEventListener("pointerup", onUp);
-    return () => {
-      el.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("pointerup", onUp);
-    };
-  }, [active, go]);
-
-  const current = reviews[active];
-
-  return (
-    <>
-      <div
-        className="flow"
-        ref={root}
-        data-cursor={count > 1 ? "drag" : undefined}
-        onMouseEnter={() => (paused.current = true)}
-        onMouseLeave={() => (paused.current = false)}
-      >
-        {reviews.map((review, i) => {
-          const d = i - active;
-          const isActive = d === 0;
-          return (
-            <article
-              key={review.name}
-              className="flow-card"
-              style={{ "--d": d, "--ad": Math.abs(d) } as React.CSSProperties}
-              aria-hidden={!isActive}
-              onClick={() => { if (!isActive) go(i); }}
-            >
-              <Stars count={review.stars} />
-              <blockquote className="flow-quote">“{review.text}”</blockquote>
-              <div className="flow-who">
-                <span className="flow-avatar" aria-hidden="true">{initials(review.name)}</span>
-                <div>
-                  <strong>{review.name}</strong>
-                  <small>Google review · {review.when}</small>
-                </div>
-                <button type="button" className="flow-reply-toggle" onClick={() => setReplyOpen((v) => !v)} tabIndex={isActive ? 0 : -1} aria-expanded={isActive && replyOpen}>
-                  Owner reply
-                </button>
-              </div>
-              <div className={`flow-reply ${isActive && replyOpen ? "open" : ""}`}>
-                <b>Response from ECHO TECH EVENTS <button type="button" onClick={() => setReplyOpen(false)} tabIndex={isActive && replyOpen ? 0 : -1}>Close</button></b>
-                <p>{review.ownerReply}</p>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-
-      <div className="flow-nav">
-        <button type="button" onClick={() => go(active - 1)} disabled={active === 0} aria-label="Previous review"><ArrowLeft /></button>
-        <span>{String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}</span>
-        <button type="button" onClick={() => go(active + 1)} disabled={active === count - 1} aria-label="Next review"><ArrowRight /></button>
-      </div>
-      <div className="reviews-more">
-        <a className="text-link" href={current.url} target="_blank" rel="noopener noreferrer">Read this review on Google <ArrowUpRight /></a>
-      </div>
-    </>
-  );
-}
-
 export function ReviewsSection({ reviews }: { reviews: Review[] }) {
+  const average = reviews.reduce((sum, r) => sum + r.stars, 0) / Math.max(reviews.length, 1);
+
   return (
     <section className="reviews-section" data-chapter="Share">
       <div className="reviews-head">
         <Reveal>
-          <span className="chapter-tag">07 / Client voices</span>
+          <span className="chapter-tag">06 / Client voices</span>
           <h2>Heard from<br /><em>the room.</em></h2>
         </Reveal>
-        <Reveal delay={0.1} className="reviews-badge">
-          <span className="google-pill"><GoogleG /> Reviews on Google</span>
-          <p>Words from clients who hosted ECHO at their events, shared publicly on Google. Each review links to its original.</p>
+        <Reveal delay={0.1} className="rv-score">
+          <span className="rv-score-g"><GoogleG /></span>
+          <div>
+            <div className="rv-score-top"><strong>{average.toFixed(1)}</strong><Stars count={Math.round(average)} /></div>
+            <p>{reviews.length} Google {reviews.length === 1 ? "review" : "reviews"} from real clients</p>
+          </div>
         </Reveal>
       </div>
-      <ReviewsFlow reviews={reviews} />
+
+      <div className="rv-grid">
+        {reviews.map((review, i) => (
+          <Reveal key={review.name} delay={i * 0.1} className="rv-reveal">
+            <article className="rv-card">
+              <span className="rv-mark" aria-hidden="true">“</span>
+              <Stars count={review.stars} />
+              <blockquote>{review.text}</blockquote>
+              <div className="rv-who">
+                <span className="rv-avatar" aria-hidden="true">{initials(review.name)}</span>
+                <div>
+                  <strong>{review.name}</strong>
+                  <small>{review.when}</small>
+                </div>
+                <a href={review.url} target="_blank" rel="noopener noreferrer" aria-label={`Read ${review.name}'s review on Google`}>
+                  <GoogleG /> View <ArrowUpRight />
+                </a>
+              </div>
+              <details className="rv-reply">
+                <summary>Reply from ECHO TECH EVENTS</summary>
+                <p>{review.ownerReply}</p>
+              </details>
+            </article>
+          </Reveal>
+        ))}
+      </div>
     </section>
   );
 }

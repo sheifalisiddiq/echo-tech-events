@@ -17,7 +17,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="page-hero about-hero">
-        <div className="hero-photo" aria-hidden="true"><ParallaxImage src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=2000&q=80" alt="" speed={14} /></div>
+        <div className="hero-photo" aria-hidden="true"><ParallaxImage src="/hero-booth-about.png" alt="" speed={14} /></div>
         <div><span className="eyebrow">About / ECHO TECH EVENTS</span><h1>We turn event<br/>technology into<br/><em>human moments.</em></h1></div>
         <p>Based in Dubai, ECHO TECH EVENTS creates premium photo, video, AI and interactive experiences for ambitious events across the UAE.</p>
         <span className="page-number">A / 01</span>

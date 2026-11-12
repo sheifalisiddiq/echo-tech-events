@@ -54,7 +54,7 @@ export function ProcessJourney({ steps, image }: { steps: readonly Step[]; image
       <div className="process-echo" aria-hidden="true" />
       <div className="journey-inner">
         <Reveal className="section-heading">
-          <span className="chapter-tag">06 / A considered process</span>
+          <span className="chapter-tag">05 / A considered process</span>
           <h2>From brief to<br /><em>show time.</em></h2>
         </Reveal>
         <div className="process-line">

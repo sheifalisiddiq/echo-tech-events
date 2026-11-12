@@ -11,7 +11,6 @@ import { isReady, lockScroll, unlockScroll } from "@/lib/scroll";
 const links = [
   ["Home", "/"],
   ["About", "/about"],
-  ["Experiences", "/experiences"],
   ["Portfolio", "/portfolio"],
   ["Contact", "/contact"],
 ] as const;

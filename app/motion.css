@@ -115,8 +115,8 @@ html:not([data-echo-ready]) .cursor { opacity: 0 !important; }
 
 /* ---------- Hero ---------- */
 .hero-layers { position: absolute; inset: 0; }
-.hero-bg { position: absolute; inset: -4%; will-change: transform; }
-.hero-bg img { object-position: center 45%; }
+.hero-bg { position: absolute; inset: -2%; will-change: transform; }
+.hero-bg img { object-position: center 22%; }
 .hero-streaks { position: absolute; inset: -10% -10%; pointer-events: none; mix-blend-mode: screen; opacity: .55; background:
   linear-gradient(105deg, transparent 38%, rgba(36,107,253,.28) 44%, transparent 50%),
   linear-gradient(105deg, transparent 56%, rgba(91,140,255,.2) 61%, transparent 66%),
@@ -133,7 +133,7 @@ html:not([data-echo-ready]) .cursor { opacity: 0 !important; }
 .light-section .chapter-tag, .why-section .chapter-tag, .reviews-section .chapter-tag { color: var(--blue); }
 
 /* ---------- Signature experiences: pinned horizontal rail ---------- */
-.sig { position: relative; background: var(--bg-0); color: var(--white); padding: clamp(6.5rem, 9vw, 8rem) 0 clamp(3rem, 5vw, 4.5rem); overflow: hidden; }
+.sig { position: relative; background: var(--bg-0); color: var(--white); padding: clamp(5.5rem, 7vw, 6.5rem) 0 clamp(2rem, 4vw, 3.25rem); overflow: hidden; }
 .sig-head { padding: 0 var(--gutter); margin-bottom: clamp(1.5rem, 3vw, 2.5rem); display: grid; grid-template-columns: 1.3fr .7fr; gap: 8vw; align-items: end; }
 .sig-head h2 { font-family: var(--display); font-size: clamp(2.6rem, 4.6vw, 5.4rem); line-height: .94; letter-spacing: -.055em; text-transform: uppercase; margin: 0; }
 .sig-head h2 em { font-weight: 500; font-style: normal; color: var(--blue); }
@@ -182,7 +182,7 @@ html:not([data-echo-ready]) .cursor { opacity: 0 !important; }
 /* ---------- Helix gallery (Three.js) ---------- */
 .helix { position: relative; background: var(--paper); color: var(--black); overflow: hidden; }
 .helix-stage { position: relative; height: 100svh; min-height: 640px; display: flex; flex-direction: column; }
-.helix-head { position: relative; z-index: 3; padding: clamp(6.5rem, 9vw, 8rem) var(--gutter) 0; display: flex; flex-direction: column; align-items: flex-start; gap: 1.6rem; pointer-events: none; max-width: min(46vw, 640px); }
+.helix-head { position: relative; z-index: 3; padding: clamp(5.5rem, 7vw, 6.5rem) var(--gutter) 0; display: flex; flex-direction: column; align-items: flex-start; gap: 1.6rem; pointer-events: none; max-width: min(46vw, 640px); }
 .helix-head > * { pointer-events: auto; }
 .helix-head h2 { font-family: var(--display); font-size: clamp(2.6rem, 4.6vw, 5.4rem); line-height: .94; letter-spacing: -.055em; text-transform: uppercase; margin: 0; }
 .helix-head h2 em { font-weight: 500; font-style: normal; color: var(--blue); }
@@ -267,12 +267,12 @@ html:not([data-echo-ready]) .cursor { opacity: 0 !important; }
 .process-echo { position: absolute; right: -8vw; top: 50%; width: 46vw; aspect-ratio: 1; transform: translateY(-50%); border-radius: 50%; border: 1px solid rgba(91,140,255,.18); box-shadow: 0 0 0 6vw rgba(36,107,253,.03), 0 0 0 12vw rgba(36,107,253,.02); pointer-events: none; }
 
 /* ---------- Google reviews coverflow ---------- */
-.reviews-section { background: var(--paper); color: var(--black); padding: var(--section-y) var(--gutter); overflow: hidden; }
+.reviews-section { background: var(--bg-1); color: var(--white); padding: var(--section-y) var(--gutter); overflow: hidden; }
 .reviews-head { display: grid; grid-template-columns: 1.3fr .7fr; gap: 8vw; align-items: end; margin-bottom: var(--head-gap); }
 .reviews-head h2 { font-family: var(--display); font-size: clamp(2.6rem, 4.6vw, 5.4rem); line-height: .94; letter-spacing: -.055em; text-transform: uppercase; margin: 1.2rem 0 0; }
 .reviews-head h2 em { font-weight: 500; font-style: normal; color: var(--blue); }
 .reviews-badge { display: flex; flex-direction: column; gap: .8rem; align-items: flex-start; }
-.reviews-badge p { margin: 0; color: #5b6068; line-height: 1.7; max-width: 380px; }
+.reviews-badge p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 380px; }
 .google-pill { display: inline-flex; align-items: center; gap: .6rem; padding: .55rem .9rem .55rem .6rem; border-radius: 999px; background: #fff; border: 1px solid var(--dark-line); font-size: .66rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .google-pill svg { width: 20px; height: 20px; }
 .stars { display: inline-flex; gap: 2px; color: #f4b400; }
@@ -357,7 +357,8 @@ html:not([data-echo-ready]) .cursor { opacity: 0 !important; }
 
 /* ---------- Signature rail: pinned desktop mode ---------- */
 @media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .sig.sig-pinned { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
+  .sig.sig-pinned { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; padding-top: clamp(4.75rem, 7vh, 5.5rem); padding-bottom: clamp(2rem, 4vh, 3rem); }
+  .sig-pinned .sig-card, .sig-pinned .sig-outro { height: clamp(300px, calc(100svh - 410px), 560px); }
   .sig-pinned .sig-card { opacity: .5; filter: saturate(.7); transition: transform .5s var(--ease), box-shadow .5s, opacity .6s, filter .6s; }
   .sig-pinned .sig-card.is-tilting { transition: transform .12s linear, box-shadow .5s, opacity .6s, filter .6s; }
   .sig-pinned .sig-card.is-active { opacity: 1; filter: none; }
@@ -389,6 +390,36 @@ html:not([data-echo-ready]) .cursor { opacity: 0 !important; }
 }
 @media (max-width: 1024px) { .orbit-info { flex-direction: column; align-items: flex-start; } .orbit-controls { flex-wrap: wrap; } }
 
-/* Hero background video (sits over the still image, which stays as fallback) */
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; z-index: 1; }
-@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
+/* Desktop and phone photographs share the same five-beat rotation and moving hero layer. */
+.hero-frame { position: absolute; inset: 0; overflow: hidden; opacity: 0; }
+.hero-frame:first-child { opacity: 1; }
+.hero-frame img { object-fit: cover; object-position: center 22%; transform-origin: 68% 30%; will-change: transform; }
+.hero-frame .hero-mobile { display: none; }
+.hero-frame-1 { animation: hero-show-one 30s ease-in-out infinite; }
+.hero-frame-2 { animation: hero-show-two 30s ease-in-out infinite; }
+.hero-frame-3 { animation: hero-show-three 30s ease-in-out infinite; }
+.hero-frame-4 { animation: hero-show-four 30s ease-in-out infinite; }
+.hero-frame-5 { animation: hero-show-five 30s ease-in-out infinite; }
+.hero-frame-1 img { animation: hero-zoom-one 30s linear infinite; }
+.hero-frame-2 img { animation: hero-zoom-two 30s linear infinite; }
+.hero-frame-3 img { animation: hero-zoom-three 30s linear infinite; }
+.hero-frame-4 img { animation: hero-zoom-four 30s linear infinite; }
+.hero-frame-5 img { animation: hero-zoom-five 30s linear infinite; }
+@keyframes hero-show-one { 0%, 17% { opacity: 1; } 21%, 97% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes hero-show-two { 0%, 17%, 41%, 100% { opacity: 0; } 21%, 37% { opacity: 1; } }
+@keyframes hero-show-three { 0%, 37%, 61%, 100% { opacity: 0; } 41%, 57% { opacity: 1; } }
+@keyframes hero-show-four { 0%, 57%, 81%, 100% { opacity: 0; } 61%, 77% { opacity: 1; } }
+@keyframes hero-show-five { 0%, 77%, 100% { opacity: 0; } 81%, 97% { opacity: 1; } }
+@keyframes hero-zoom-one { 0% { transform: scale(1); } 21%, 97% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@keyframes hero-zoom-two { 0%, 17% { transform: scale(1.06); } 41%, 100% { transform: scale(1); } }
+@keyframes hero-zoom-three { 0%, 37% { transform: scale(1); } 61%, 100% { transform: scale(1.06); } }
+@keyframes hero-zoom-four { 0%, 57% { transform: scale(1.06); } 81%, 100% { transform: scale(1); } }
+@keyframes hero-zoom-five { 0%, 77% { transform: scale(1); } 100% { transform: scale(1.06); } }
+@media (max-width: 760px) {
+  .hero-frame .hero-desktop { display: none; }
+  .hero-frame .hero-mobile { display: block; object-position: center top; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-frame, .hero-frame img { animation: none !important; }
+  .hero-frame:not(:first-child) { display: none; }
+}

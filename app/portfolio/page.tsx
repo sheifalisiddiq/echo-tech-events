@@ -11,7 +11,7 @@ export default function PortfolioPage() {
   return (
     <>
       <section className="page-hero portfolio-page-hero">
-        <div className="hero-photo" aria-hidden="true"><ParallaxImage src="https://images.unsplash.com/photo-1496337589254-7e19d01cec44?auto=format&fit=crop&w=2000&q=80" alt="" speed={14} /></div>
+        <div className="hero-photo" aria-hidden="true"><ParallaxImage src="/hero-booth-portfolio.png" alt="" speed={14} /></div>
         <div><span className="eyebrow">Selected work / Demo direction</span><h1>Experiences,<br/><em>in their element.</em></h1></div>
         <p>Real footage from delivered events, alongside clearly marked concept imagery until more approved ECHO project photography and films are supplied.</p>
         <span className="page-number">P / 06</span>

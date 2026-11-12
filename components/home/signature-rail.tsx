@@ -121,7 +121,7 @@ export function SignatureRail({ items, total }: { items: Experience[]; total: nu
           <div className="sig-outro">
             <strong>{String(total).padStart(2, "0")}</strong>
             <p>formats across photo, video, AI and immersive experiences.</p>
-            <Link href="/experiences" className="button button-light">View all {total} experiences <ArrowRight /></Link>
+            <Link href="/portfolio" className="button button-light">View our work <ArrowRight /></Link>
           </div>
         </div>
       </div>

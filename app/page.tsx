@@ -4,7 +4,7 @@ import { FAQList } from "@/components/faq";
 import { ParallaxImage } from "@/components/parallax-image";
 import { Reveal } from "@/components/reveal";
 import { Hero } from "@/components/home/hero";
-import { HelixGallery } from "@/components/home/helix-gallery";
+import { ClientsMarquee } from "@/components/home/clients-marquee";
 import { OccasionOrbit } from "@/components/home/occasion-orbit";
 import { PortfolioPreview } from "@/components/home/portfolio-preview";
 import { ProcessJourney } from "@/components/home/process-journey";
@@ -13,13 +13,19 @@ import { SignatureRail } from "@/components/home/signature-rail";
 import { WhyStack } from "@/components/home/why-stack";
 import { experiences, faq, featured, occasions, portfolioItems, reviews } from "@/lib/data";
 
-const heroImage = "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=2400&q=92";
+const heroImages = [
+  { desktop: "/hero-home-v2/brand-desktop.png", mobile: "/hero-home-v2/brand-mobile.png" },
+  { desktop: "/hero-home-v2/technology-desktop.png", mobile: "/hero-home-v2/technology-mobile.png" },
+  { desktop: "/hero-home-v2/delivery-desktop.png", mobile: "/hero-home-v2/delivery-mobile.png" },
+  { desktop: "/hero-home-v2/visibility-desktop.png", mobile: "/hero-home-v2/visibility-mobile.png" },
+  { desktop: "/hero-home-v2/support-desktop.png", mobile: "/hero-home-v2/support-mobile.png" },
+] as const;
 const values = [
-  ["Customized Event Experiences", "Every touchpoint can be shaped around your event, audience and visual identity."],
-  ["Premium Event Technology", "Contemporary capture formats selected for both visual impact and guest experience."],
-  ["Professional Event Execution", "A considered approach to planning, setup and the live event environment."],
-  ["Corporate Branding Opportunities", "Thoughtful ways to make your brand present without overpowering the moment."],
-  ["On-Site Setup & Support", "Execution requirements are planned with the venue and event team before show day."],
+  ["Made around your brand", "Colors, graphics and screens designed to match your event and identity."],
+  ["Premium tech, great results", "Modern photo, video and AI formats that look sharp and get guests talking."],
+  ["Smooth, professional delivery", "We plan, set up and run everything so show day goes without a hitch."],
+  ["Your brand front and center", "Logos and messaging built into every photo and screen, without stealing the moment."],
+  ["On-site team, start to finish", "We coordinate with your venue ahead of time and stay on hand throughout the event."],
 ] as const;
 
 const steps = [
@@ -32,24 +38,29 @@ const steps = [
 export default function HomePage() {
   return (
     <>
-      <Hero image={heroImage} />
+      <Hero images={heroImages} />
+
+      <ClientsMarquee />
 
       <SignatureRail items={featured} total={experiences.length} />
 
-      <div className="ticker" aria-hidden="true"><div>PHOTO &nbsp;·&nbsp; MOTION &nbsp;·&nbsp; AI &nbsp;·&nbsp; INTERACTION &nbsp;·&nbsp; BRAND EXPERIENCE &nbsp;·&nbsp; PHOTO &nbsp;·&nbsp; MOTION &nbsp;·&nbsp; AI &nbsp;·&nbsp; INTERACTION</div></div>
+      <PortfolioPreview />
 
-      <HelixGallery />
+      <div className="ticker" aria-hidden="true"><div>{[0, 1].map((half) => <span key={half}>{Array.from({ length: 4 }, () => "PHOTO · MOTION · AI · INTERACTION · BRAND EXPERIENCE · ").join("")}</span>)}</div></div>
+
 
       <OccasionOrbit items={occasions} />
 
-      <PortfolioPreview />
-
-      <section className="why-section" data-chapter="Experience">
-        <div className="why-sticky">
-          <span className="chapter-tag">05 / Why ECHO</span>
-          <h2>Technology is only<br />the beginning.</h2>
-          <p>We focus on how the experience looks, feels and lives within the wider event.</p>
-          <Link href="/about" className="text-link">Our approach <ArrowUpRight /></Link>
+      <section className="why2" data-chapter="Experience">
+        <div className="why2-head">
+          <div>
+            <span className="chapter-tag">04 / Why ECHO</span>
+            <h2>Why brands<br />choose <em>ECHO.</em></h2>
+          </div>
+          <div className="why2-intro">
+            <p>One team for the technology, the design and the day itself. Your guests get a moment worth sharing, and you get a stress-free event.</p>
+            <Link href="/about" className="text-link light">Our approach <ArrowUpRight /></Link>
+          </div>
         </div>
         <WhyStack values={values} />
       </section>
@@ -59,12 +70,12 @@ export default function HomePage() {
       <ReviewsSection reviews={reviews} />
 
       <section className="section faq-section" data-chapter="Echo">
-        <div className="faq-title"><span className="chapter-tag">08 / Questions, answered</span><h2>Before we<br />begin.</h2><p>Have something specific in mind? Share the details and we’ll shape the right starting point.</p><Link href="/contact" className="text-link light">Ask a question <ArrowUpRight /></Link></div>
+        <div className="faq-title"><span className="chapter-tag">07 / Questions, answered</span><h2>Before we<br />begin.</h2><p>Have something specific in mind? Share the details and we’ll shape the right starting point.</p><Link href="/contact" className="text-link light">Ask a question <ArrowUpRight /></Link></div>
         <FAQList items={faq} />
       </section>
 
       <section className="final-cta" data-chapter="Echo">
-        <div className="cta-bg"><ParallaxImage src={heroImage} alt="" speed={10} /></div>
+        <div className="cta-bg"><ParallaxImage src={heroImages[0].desktop} alt="" speed={10} /></div>
         <div className="cta-orb" />
         <div className="cta-rings" aria-hidden="true"><i /><i /><i /><i /></div>
         <Reveal><span className="eyebrow">Your next event / amplified</span></Reveal>
