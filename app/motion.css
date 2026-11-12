@@ -31,13 +31,13 @@ html.is-locked { overflow: hidden; }
 /* ---------- Scroll progress + chapter rail ---------- */
 .scroll-bar { position: fixed; z-index: 70; top: 0; left: 0; right: 0; height: 2px; pointer-events: none; }
 .scroll-bar > div { height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-bright)); transform-origin: left; transform: scaleX(0); box-shadow: 0 0 12px var(--blue); }
-.chapter-rail { position: fixed; z-index: 40; right: clamp(.8rem, 1.6vw, 1.6rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 1.1rem; align-items: flex-end; mix-blend-mode: difference; }
+.chapter-rail { position: fixed; z-index: 40; right: clamp(.8rem, 1.6vw, 1.6rem); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 1.1rem; align-items: flex-end; text-shadow: 0 1px 8px rgba(0,0,0,.55); }
 html:not([data-echo-ready]) .chapter-rail { opacity: 0; }
 .chapter-rail button { all: unset; cursor: pointer; display: flex; align-items: center; gap: .8rem; color: #fff; }
 .chapter-label { display: flex; gap: .5rem; align-items: baseline; font-size: .56rem; letter-spacing: .2em; text-transform: uppercase; opacity: 0; transform: translateX(8px); transition: opacity .3s, transform .4s var(--ease); }
 .chapter-label small { opacity: .6; }
 .chapter-rail button.active .chapter-label, .chapter-rail button:hover .chapter-label, .chapter-rail button:focus-visible .chapter-label { opacity: 1; transform: none; }
-.chapter-dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid #fff; transition: transform .4s var(--ease), background .3s; }
+.chapter-dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid #fff; box-shadow: 0 0 6px rgba(0,0,0,.5); transition: transform .4s var(--ease), background .3s; }
 .chapter-rail button.active .chapter-dot { background: #fff; transform: scale(1.5); }
 
 /* ---------- Liquid glass header ---------- */
