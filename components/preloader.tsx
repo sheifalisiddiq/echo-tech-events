@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { lockScroll, unlockScroll } from "@/lib/scroll";
 
-const SEEN_KEY = "echo-preloaded";
 const RING_COUNT = 4;
 const PROGRESS_RADIUS = 78;
 const PROGRESS_LENGTH = 2 * Math.PI * PROGRESS_RADIUS;
@@ -29,8 +28,6 @@ export function Preloader() {
     if (!root) return;
     const html = document.documentElement;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let seen = false;
-    try { seen = sessionStorage.getItem(SEEN_KEY) === "1"; } catch {}
     let cancelled = false;
 
     const markReady = () => {
@@ -38,7 +35,6 @@ export function Preloader() {
       html.dataset.echoReady = "1";
       unlockScroll();
       window.dispatchEvent(new Event("echo:ready"));
-      try { sessionStorage.setItem(SEEN_KEY, "1"); } catch {}
     };
     const done = () => { if (!cancelled) setGone(true); };
 
@@ -53,9 +49,9 @@ export function Preloader() {
       const countEl = q(".pl-num")[0] as HTMLElement;
       const arc = q(".pl-arc")[0] as unknown as SVGCircleElement;
 
-      if (reduce || seen) {
+      if (reduce) {
         markReady();
-        gsap.to(root, { autoAlpha: 0, duration: reduce ? 0.3 : 0.5, delay: seen && !reduce ? 0.1 : 0, ease: "power2.out", onComplete: done });
+        gsap.to(root, { autoAlpha: 0, duration: 0.3, ease: "power2.out", onComplete: done });
         return;
       }
 
