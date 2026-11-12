@@ -388,3 +388,7 @@ html:not([data-echo-ready]) .cursor { opacity: 0 !important; }
   #all-experiences .directory-grid .experience-card { flex: 0 0 min(78vw, 360px); scroll-snap-align: center; min-height: 460px; }
 }
 @media (max-width: 1024px) { .orbit-info { flex-direction: column; align-items: flex-start; } .orbit-controls { flex-wrap: wrap; } }
+
+/* Hero background video (sits over the still image, which stays as fallback) */
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }

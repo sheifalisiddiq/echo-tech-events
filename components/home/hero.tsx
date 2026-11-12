@@ -78,6 +78,7 @@ export function Hero({ image }: { image: string }) {
       <div className="hero-layers">
         <div className="hero-bg">
           <Image src={image} alt="Demonstration image of a cinematic event environment with blue lighting" fill priority sizes="100vw" />
+          <video className="hero-video" src="/hero-reel.mp4" poster="/hero-reel-poster.jpg" autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
         </div>
         <div className="hero-streaks" />
         <HeroField />
