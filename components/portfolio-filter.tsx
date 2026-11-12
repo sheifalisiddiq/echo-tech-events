@@ -16,7 +16,7 @@ export function PortfolioFilter() {
       <div className="filter-bar portfolio-filters">{categories.map((cat) => <button key={cat} className={active === cat ? "active" : ""} onClick={() => setActive(cat)}>{cat}</button>)}</div>
       <div className="portfolio-grid">
         {items.map((item, index) => (
-          <button data-cursor="view" className={`portfolio-card p-${index + 1}`} key={item.title} onClick={() => setSelected(item)}>
+          <button data-cursor="view" style={{ "--i": index } as React.CSSProperties} className={`portfolio-card p-${index + 1}`} key={item.title} onClick={() => setSelected(item)}>
             <ParallaxImage src={item.image} alt={`Demonstration visual: ${item.title}`} speed={5} sizes="(max-width: 768px) 100vw, 50vw" />
             <span className="demo-tag">Demo concept</span><span className="portfolio-meta">{item.category}<strong>{item.title}</strong></span><Maximize2 />
           </button>

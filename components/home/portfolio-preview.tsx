@@ -4,28 +4,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { ParallaxImage } from "@/components/parallax-image";
+import { AutoplayVideo } from "@/components/autoplay-video";
 import { Reveal } from "@/components/reveal";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { scribbleBooth } from "@/lib/client-work";
 
-type Item = { title: string; category: string; image: string };
-
-/** Portfolio direction: three layered frames drifting at different speeds, then a slow marquee strip. */
-export function PortfolioPreview({ items }: { items: Item[] }) {
-  const collage = useRef<HTMLDivElement>(null);
-  const shots = items.slice(0, 3);
-  const strip = [...items, ...items];
+/** Home portfolio teaser: three real pieces of delivered work drifting at different speeds. */
+export function PortfolioPreview() {
+  const grid = useRef<HTMLDivElement>(null);
+  const [v1, v2] = scribbleBooth.videos;
+  const shot = scribbleBooth.images[1];
 
   useGSAP(
     () => {
-      const el = collage.current;
+      const el = grid.current;
       if (!el) return;
       const mm = gsap.matchMedia();
       mm.add("(min-width: 761px) and (prefers-reduced-motion: no-preference)", () => {
-        const speeds = [6, 16, 26];
-        gsap.utils.toArray<HTMLElement>(".preview-shot", el).forEach((shot, i) => {
-          gsap.fromTo(shot, { yPercent: speeds[i] }, {
-            yPercent: -speeds[i],
+        const offsets = [0, 70, 20];
+        gsap.utils.toArray<HTMLElement>(".home-work-tile", el).forEach((tile, i) => {
+          gsap.fromTo(tile, { y: offsets[i] }, {
+            y: offsets[i] - 90,
             ease: "none",
             scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0.6 },
           });
@@ -33,36 +32,26 @@ export function PortfolioPreview({ items }: { items: Item[] }) {
       });
       return () => mm.revert();
     },
-    { scope: collage },
+    { scope: grid },
   );
 
   return (
     <section className="section portfolio-preview" data-chapter="Experience">
       <Reveal className="section-heading split-heading">
-        <div><span className="chapter-tag">04 / Portfolio direction</span><h2>Moments with<br /><em>presence.</em></h2></div>
+        <div><span className="chapter-tag">04 / Selected work</span><h2>Moments with<br /><em>presence.</em></h2></div>
         <div>
-          <p>Real ECHO project media has not yet been supplied. These concept frames demonstrate the intended premium portfolio art direction.</p>
-          <Link href="/portfolio" className="text-link">Explore portfolio <ArrowUpRight /></Link>
+          <p>Real footage and guest screens from a delivered {scribbleBooth.title} activation.</p>
+          <Link href="/portfolio" className="text-link">View full portfolio <ArrowUpRight /></Link>
         </div>
       </Reveal>
-      <div className="preview-collage" ref={collage}>
-        {shots.map((item, index) => (
-          <div className={`preview-shot shot-${index + 1}`} key={item.title} data-cursor="view" data-cursor-label="Demo">
-            <ParallaxImage src={item.image} alt={`Demonstration visual: ${item.title}`} speed={9} sizes="50vw" />
-            <span>Demo concept / {item.category}</span>
-          </div>
-        ))}
+      <div className="home-work" ref={grid}>
+        <figure className="home-work-tile"><AutoplayVideo video={v1} /></figure>
+        <figure className="home-work-tile">
+          <Image src={shot.src} alt={shot.title} width={shot.width} height={shot.height} sizes="(max-width: 760px) 100vw, 30vw" />
+        </figure>
+        <figure className="home-work-tile"><AutoplayVideo video={v2} /></figure>
       </div>
-      <div className="marquee" aria-hidden="true">
-        <div className="marquee-track">
-          {strip.map((item, i) => (
-            <div className="marquee-item" key={`${item.title}-${i}`}>
-              <Image src={item.image} alt="" fill sizes="320px" />
-              <span>{item.category}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <Link href="/portfolio" className="button home-work-cta" data-cursor="view" data-cursor-label="Open">See all work <ArrowUpRight /></Link>
     </section>
   );
 }

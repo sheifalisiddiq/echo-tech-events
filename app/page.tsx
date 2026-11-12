@@ -42,7 +42,7 @@ export default function HomePage() {
 
       <OccasionOrbit items={occasions} />
 
-      <PortfolioPreview items={portfolioItems} />
+      <PortfolioPreview />
 
       <section className="why-section" data-chapter="Experience">
         <div className="why-sticky">
