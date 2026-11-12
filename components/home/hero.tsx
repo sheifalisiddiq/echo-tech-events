@@ -103,7 +103,7 @@ export function Hero({ images }: { images: readonly [HeroImage, HeroImage, HeroI
           <div className="hero-actions" data-hero-fade>
             <Link className="button button-light" href="/portfolio">View our work <ArrowUpRight /></Link>
             <Link className="button button-ghost" href="/contact">Get a quote</Link>
-            <Link className="round-link" href="/contact" aria-label="WhatsApp enquiry"><MessageCircle /> <span>WhatsApp<br />via enquiry</span></Link>
+            <a className="round-link" href="https://wa.me/971503482477" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp"><MessageCircle /> <span>Chat on<br />WhatsApp</span></a>
           </div>
         </div>
       </div>

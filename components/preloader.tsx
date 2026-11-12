@@ -44,7 +44,7 @@ export function Preloader() {
 
     lockScroll();
     // Safety net: never trap a visitor behind the loader.
-    const failsafe = window.setTimeout(() => { markReady(); done(); }, 9000);
+    const failsafe = window.setTimeout(() => { markReady(); done(); }, 11000);
 
     const ctx = gsap.context(() => {
       const q = gsap.utils.selector(root);
@@ -61,7 +61,7 @@ export function Preloader() {
 
       const progress = { p: 0 };
       const render = () => {
-        const v = Math.round(progress.p);
+        const v = Math.max(1, Math.round(progress.p));
         countEl.textContent = String(v).padStart(3, "0");
         arc.style.strokeDashoffset = String(PROGRESS_LENGTH * (1 - progress.p / 100));
       };
@@ -77,32 +77,26 @@ export function Preloader() {
         .to(q(".pl-meta"), { autoAlpha: 1, duration: 0.6 }, 0.3)
         .to(q(".pl-tag span"), { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" }, 0.55);
 
-      // Echo: soundwave rings radiate out of the mark until the page is ready.
-      const rings = gsap.fromTo(
-        q(".pl-ring"),
-        { scale: 0.32, autoAlpha: 0.8, svgOrigin: "200 200" },
-        { scale: 1.9, autoAlpha: 0, svgOrigin: "200 200", duration: 2.4, stagger: 0.6, repeat: -1, ease: "power1.out" },
-      );
-
       const run = async () => {
-        await new Promise<void>((resolve) => gsap.to(progress, { p: 88, duration: 1.9, ease: "power2.out", onUpdate: render, onComplete: resolve }));
-        await Promise.race([Promise.all([document.fonts?.ready, heroImageReady()]), wait(4200)]);
+        // One continuous 1 -> 100 count; readiness loads in parallel and only holds the exit if it is late.
+        const ready = Promise.race([Promise.all([document.fonts?.ready, heroImageReady()]), wait(6000)]);
+        await new Promise<void>((resolve) => gsap.to(progress, { p: 100, duration: 3.4, ease: "sine.inOut", onUpdate: render, onComplete: resolve }));
+        await ready;
         if (cancelled) return;
-        await new Promise<void>((resolve) => gsap.to(progress, { p: 100, duration: 0.45, ease: "power1.out", onUpdate: render, onComplete: resolve }));
         await wait(180);
         if (cancelled) return;
 
         // Aperture: a glowing iris opens from the centre and reveals the hero.
         root.style.pointerEvents = "none";
         markReady();
-        rings.kill();
         const maxR = Math.hypot(window.innerWidth, window.innerHeight) / 2 + 40;
+        edge.style.width = edge.style.height = `${maxR * 2}px`;
         const hole = { r: 0 };
         const applyHole = () => {
           const mask = `radial-gradient(circle at 50% 50%, transparent ${hole.r}px, #000 ${hole.r + 1.5}px)`;
           veil.style.maskImage = mask;
           veil.style.setProperty("-webkit-mask-image", mask);
-          edge.style.transform = `translate(-50%, -50%) scale(${Math.max(hole.r, 1) / 50})`;
+          edge.style.transform = `translate3d(-50%, -50%, 0) scale(${Math.max(hole.r, 1) / maxR})`;
         };
         applyHole();
         gsap.to(q(".pl-logo, .pl-tag, .pl-meta, .pl-count"), { autoAlpha: 0, scale: 1.06, duration: 0.45, ease: "power2.in" });
@@ -131,10 +125,12 @@ export function Preloader() {
     <div className="preloader" ref={rootRef} aria-hidden="true">
       <div className="pl-veil">
         <div className="pl-center">
-          <svg className="pl-rings" viewBox="0 0 400 400" fill="none">
+          <div className="pl-rings" aria-hidden="true">
             {Array.from({ length: RING_COUNT }, (_, i) => (
-              <circle key={i} className="pl-ring" cx="200" cy="200" r="100" />
+              <i key={i} className="pl-ring" style={{ animationDelay: `${i * 0.6}s` }} />
             ))}
+          </div>
+          <svg className="pl-progress" viewBox="0 0 400 400" fill="none">
             <circle className="pl-track" cx="200" cy="200" r={PROGRESS_RADIUS} />
             <circle
               className="pl-arc"
@@ -153,7 +149,7 @@ export function Preloader() {
           <span>Engineering</span> <span>the</span> <span>moment</span>
         </p>
         <span className="pl-meta pl-count">
-          <b className="pl-num">000</b>
+          <b className="pl-num">001</b>
           <i>%</i>
         </span>
         <span className="pl-meta pl-city">DXB / UAE</span>

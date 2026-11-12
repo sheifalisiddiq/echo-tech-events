@@ -11,7 +11,7 @@ import { ProcessJourney } from "@/components/home/process-journey";
 import { ReviewsSection } from "@/components/home/reviews-flow";
 import { SignatureRail } from "@/components/home/signature-rail";
 import { WhyStack } from "@/components/home/why-stack";
-import { experiences, faq, featured, occasions, portfolioItems, reviews } from "@/lib/data";
+import { experiences, faq, featured, occasions, reviews } from "@/lib/data";
 
 const heroImages = [
   { desktop: "/hero-home-v2/brand-desktop.png", mobile: "/hero-home-v2/brand-mobile.png" },
@@ -29,10 +29,10 @@ const values = [
 ] as const;
 
 const steps = [
-  ["Share", "Share your event requirements", "Tell us the setting, audience, date and ambition."],
-  ["Shape", "Choose & customize the experience", "Select the format, then tailor its visual language."],
-  ["Deliver", "Event setup & execution", "Align on venue access, setup and operating needs."],
-  ["Remember", "Create memorable experiences", "Give guests a moment worth keeping and sharing."],
+  ["Share", "Tell us about your event", "Share the date, venue, guest count, and the kind of booth you have in mind."],
+  ["Shape", "Make the booth yours", "Choose your setup, then tailor the backdrop, screen, photo layout, and sharing experience."],
+  ["Deliver", "We set it up and run it", "Our team coordinates with the venue, installs the booth, and helps guests throughout the event."],
+  ["Remember", "Guests take the moment home", "They leave with photos or videos ready to print, share, and remember."],
 ] as const;
 
 export default function HomePage() {
@@ -65,7 +65,7 @@ export default function HomePage() {
         <WhyStack values={values} />
       </section>
 
-      <ProcessJourney steps={steps} image={portfolioItems[3].image} />
+      <ProcessJourney steps={steps} image="/hero-home-v2/delivery-desktop.png" />
 
       <ReviewsSection reviews={reviews} />
 
