@@ -56,7 +56,8 @@ img { object-fit: cover; }
 .hero { height: 100svh; min-height: 680px; position: relative; display: flex; align-items: flex-end; overflow: hidden; }
 .parallax-media, .parallax-media-inner { position: absolute; inset: 0; }
 .parallax-media-inner img { object-position: center 45%; }
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(2,4,8,.82) 0%, rgba(2,4,8,.3) 50%, rgba(2,4,8,.08) 100%), linear-gradient(0deg, rgba(2,4,8,.78), transparent 60%); }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(2,4,8,.4), transparent 40%); }
+.hero h1, .hero-kicker, .hero-bottom > p { text-shadow: 0 2px 22px rgba(0,0,0,.6), 0 0 2px rgba(0,0,0,.35); }
 .hero-gridlines { position: absolute; inset: 0 var(--gutter); border-left: 1px solid rgba(255,255,255,.12); border-right: 1px solid rgba(255,255,255,.12); background: linear-gradient(90deg, transparent 49.95%, rgba(255,255,255,.09) 50%, transparent 50.05%); }
 .hero-content { position: relative; z-index: 3; padding: 0 var(--gutter) 8vh; width: 100%; }
 .hero-kicker, .eyebrow { font-size: .62rem; font-weight: 600; text-transform: uppercase; letter-spacing: .22em; color: #c5cad4; }
