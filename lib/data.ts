@@ -1,3 +1,5 @@
+import { workBySlug } from "@/lib/client-work";
+
 export type Experience = {
   slug: string;
   title: string;
@@ -43,8 +45,8 @@ export const experiences: Experience[] = [
   { slug: "scribble-video-booth", title: "Scribble Video Booth", shortTitle: "Scribble Video", category: "Video", description: "Hand-drawn animated accents transform short clips into lively content.", image: photos.robotic, video: "/scribble-video-1.mp4", poster: "/scribble-video-1-poster.jpg", featured: true },
 ];
 
-/** Featured experiences, with real-footage ones (Magic Mirror, Scribble) first. */
-export const featured = experiences.filter((item) => item.featured).sort((a, b) => Number(Boolean(b.video)) - Number(Boolean(a.video)));
+/** Experiences with real footage (Magic Mirror, Scribble): shown on the home rail and given a video page. */
+export const featured = experiences.filter((item) => item.slug in workBySlug);
 
 export const portfolioItems = [
   { title: "Corporate Gala Atmosphere", category: "Corporate", image: photos.gala },

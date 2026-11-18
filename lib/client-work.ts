@@ -47,3 +47,13 @@ export const magicMirror: ClientWorkSet = {
   })),
   images: [{ src: "/magic-mirror/magic-mirror-shot-1.webp", width: 1280, height: 1706, title: "Magic Mirror at a delivered event" }],
 };
+
+/**
+ * Experiences that have real footage, keyed by experience slug. This is the single source of truth:
+ * the home rail, the booth pages and the Portfolio category row all read from it. To add a booth,
+ * add its clips as a ClientWorkSet above and one line here.
+ */
+export const workBySlug: Record<string, ClientWorkSet> = {
+  "magic-mirror-selfie-booth": magicMirror,
+  "scribble-video-booth": scribbleBooth,
+};

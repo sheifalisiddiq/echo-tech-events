@@ -11,7 +11,7 @@ import { ProcessJourney } from "@/components/home/process-journey";
 import { ReviewsSection } from "@/components/home/reviews-flow";
 import { SignatureRail } from "@/components/home/signature-rail";
 import { WhyStack } from "@/components/home/why-stack";
-import { experiences, faq, featured, occasions, reviews, testimonials } from "@/lib/data";
+import { faq, featured, occasions, reviews, testimonials } from "@/lib/data";
 
 const heroImages = [
   { desktop: "/hero-home-v2/brand-desktop.png", mobile: "/hero-home-v2/brand-mobile.png" },
@@ -42,7 +42,7 @@ export default function HomePage() {
 
       <ClientsMarquee />
 
-      <SignatureRail items={featured} total={experiences.length} />
+      <SignatureRail items={featured} />
 
       <PortfolioPreview />
 

@@ -13,7 +13,7 @@ import type { Experience } from "@/lib/data";
  * Signature experiences. Desktop: the section pins and vertical scroll drives a horizontal rail with
  * in-frame image parallax and 3D tilt. Touch/tablet/reduced motion: a native swipe carousel.
  */
-export function SignatureRail({ items, total }: { items: Experience[]; total: number }) {
+export function SignatureRail({ items }: { items: Experience[] }) {
   const section = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLSpanElement>(null);
@@ -28,8 +28,13 @@ export function SignatureRail({ items, total }: { items: Experience[]; total: nu
       const mm = gsap.matchMedia();
 
       mm.add(DESKTOP_MOTION, () => {
-        sectionEl.classList.add("sig-pinned");
         const distance = () => Math.max(0, trackEl.scrollWidth - window.innerWidth);
+        // Few cards: the whole row already fits on screen, so there is nothing to scroll. Skip the pin.
+        if (distance() < 40) {
+          sectionEl.classList.add("sig-short");
+          return () => sectionEl.classList.remove("sig-short");
+        }
+        sectionEl.classList.add("sig-pinned");
 
         const tween = gsap.to(trackEl, {
           x: () => -distance(),
@@ -124,14 +129,14 @@ export function SignatureRail({ items, total }: { items: Experience[]; total: nu
             </Link>
           ))}
           <div className="sig-outro">
-            <strong>{String(total).padStart(2, "0")}</strong>
-            <p>formats across photo, video, AI and immersive experiences.</p>
+            <strong>{String(items.length).padStart(2, "0")}</strong>
+            <p>booths shown with real footage from delivered events. Open one to watch every clip.</p>
             <Link href="/portfolio" className="button button-light">View our work <ArrowRight /></Link>
           </div>
         </div>
       </div>
 
-      <div className="sig-meter" aria-hidden="true">
+      <div className="sig-meter" aria-hidden="true" hidden={items.length < 3}>
         <span><b ref={counter}>01</b> / {String(items.length).padStart(2, "0")}</span>
         <div className="sig-meter-bar"><span ref={bar} /></div>
         <span>Keep scrolling</span>

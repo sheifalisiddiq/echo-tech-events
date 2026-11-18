@@ -483,6 +483,46 @@ h1,h2,h3,p { margin-top: 0; }
   .portfolio-page-hero h1, .portfolio-page-hero > p, .portfolio-page-hero .eyebrow, .portfolio-card { animation: none; }
 }
 
+/* Booth video pages (/experiences/<slug>) */
+.booth-hero { padding: clamp(8rem, 16vh, 11rem) var(--gutter) clamp(2rem, 5vw, 3.5rem); max-width: 1100px; }
+.booth-back { display: flex; width: fit-content; align-items: center; gap: .5rem; margin-bottom: 2rem; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: #aab1bc; }
+.booth-back svg { width: 1em; height: 1em; }
+.booth-back:hover { color: #fff; }
+.booth-hero h1 { font-family: var(--display); font-size: clamp(3.4rem, 7vw, 8rem); text-transform: uppercase; letter-spacing: -.065em; line-height: .88; margin: 1.2rem 0 1.4rem; }
+.booth-hero p { max-width: 620px; margin: 0 0 1.4rem; color: #c9ced6; line-height: 1.7; }
+.booth-meta { display: flex; gap: 1.4rem; margin-bottom: 2rem; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--neon); }
+.booth-videos { padding: 0 var(--gutter) clamp(2.5rem, 6vw, 5rem); }
+.video-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--grid-gap); }
+.video-tile { position: relative; aspect-ratio: 9 / 16; transition: border-color .3s; }
+.video-tile video { width: 100%; height: 100%; object-fit: cover; background: #000; }
+.video-tile:hover { border-color: var(--blue); }
+.video-sound { position: absolute; inset: 0; width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.video-sound span { position: absolute; right: .7rem; bottom: .7rem; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: rgba(2,3,6,.65); backdrop-filter: blur(6px); color: #fff; transition: background .3s, color .3s; }
+.video-sound span svg { width: 1.1rem; height: 1.1rem; }
+.video-sound[aria-pressed="true"] span, .video-sound:hover span { background: #fff; color: #000; }
+.video-sound:focus-visible { outline: 2px solid var(--neon); outline-offset: -2px; }
+.booth-more { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2.5rem; padding: 0 var(--gutter) clamp(2.5rem, 6vw, 5rem); }
+.booth-more > div { display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
+@media (max-width: 1100px) { .video-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Portfolio: browse by experience */
+.browse-booths { padding: clamp(2.5rem, 5vw, 4rem) var(--gutter) 0; }
+.browse-booths-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--grid-gap); margin-top: 1.5rem; }
+.booth-card { position: relative; display: block; min-height: clamp(260px, 32vw, 420px); overflow: hidden; background: #111; border: 1px solid rgba(255,255,255,.1); border-radius: var(--r); isolation: isolate; transition: border-color .3s, box-shadow .4s; }
+.booth-card img { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(.2,.75,.25,1); }
+.booth-card:hover { border-color: var(--neon); box-shadow: 0 0 0 1px var(--neon), 0 0 28px var(--neon-glow); }
+.booth-card:hover img { transform: scale(1.05); }
+.booth-card .card-shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(2,3,6,.85), rgba(2,3,6,.1) 65%); }
+.booth-card-body { position: absolute; z-index: 2; left: 1.5rem; right: 1.5rem; bottom: 1.4rem; }
+.booth-card-body span { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: #cdd3dc; }
+.booth-card-body h3 { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 3.2rem); line-height: .95; letter-spacing: -.045em; text-transform: uppercase; margin: .5rem 0 0; }
+.booth-card .card-arrow { top: 1.2rem; right: 1.2rem; bottom: auto; }
+.booth-card:hover .card-arrow { background: #fff; color: #000; transform: rotate(45deg); }
+.client-see-all { padding: 1.5rem var(--gutter) 0; }
+@media (max-width: 760px) { .browse-booths-grid { grid-template-columns: minmax(0, 1fr); } }
+.sig-meter[hidden] { display: none; }
+
 /* Happy clients marquee */
 .clients-section { background: var(--bg-0); color: var(--white); padding: clamp(.9rem, 1.6vw, 1.25rem) 0; overflow: hidden; border-block: 1px solid var(--line); }
 .clients-title { margin: 0 var(--gutter) .6rem; text-align: center; font-family: var(--display); font-weight: 600; font-size: .68rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
