@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { AutoplayVideo } from "@/components/autoplay-video";
 import { ParallaxImage } from "@/components/parallax-image";
 import { Reveal } from "@/components/reveal";
 import { DESKTOP_MOTION, gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
@@ -106,10 +107,14 @@ export function SignatureRail({ items, total }: { items: Experience[]; total: nu
         <div className="sig-track" ref={track}>
           {items.map((item, index) => (
             <Link key={item.slug} href={`/experiences/${item.slug}`} className="sig-card" data-cursor="view">
-              <ParallaxImage src={item.image} alt={`Demonstration visual for ${item.title}`} axis="x" speed={9} containerAnimation={rail} sizes="(max-width: 1024px) 80vw, 34vw" />
+              {item.video ? (
+                <AutoplayVideo video={{ src: item.video, poster: item.poster ?? item.image, width: 720, height: 1280, title: `${item.title} footage` }} />
+              ) : (
+                <ParallaxImage src={item.image} alt={`Demonstration visual for ${item.title}`} axis="x" speed={9} containerAnimation={rail} sizes="(max-width: 1024px) 80vw, 34vw" />
+              )}
               <div className="card-shade" />
               <span className="sig-num" aria-hidden="true">0{index + 1}</span>
-              <div className="demo-tag">Demo media</div>
+              {!item.video && <div className="demo-tag">Demo media</div>}
               <div className="sig-body">
                 <span>{item.category} experience</span>
                 <h3>{item.shortTitle}</h3>

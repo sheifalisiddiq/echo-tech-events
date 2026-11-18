@@ -1,6 +1,6 @@
 import { ArrowUpRight, Star } from "lucide-react";
 import { Reveal } from "@/components/reveal";
-import type { Review } from "@/lib/data";
+import type { Review, Testimonial } from "@/lib/data";
 
 function GoogleG() {
   return (
@@ -23,8 +23,60 @@ function Stars({ count }: { count: number }) {
 
 const initials = (name: string) => name.replace(/^Dr\.?\s+/i, "").split(" ").slice(0, 2).map((part) => part[0]).join("").toUpperCase();
 
-export function ReviewsSection({ reviews }: { reviews: Review[] }) {
+type Slide = { kind: "google"; review: Review } | { kind: "testimonial"; testimonial: Testimonial };
+
+/** Interleave Google reviews with client testimonials so both slide in one row. */
+function mix(reviews: Review[], testimonials: Testimonial[]): Slide[] {
+  const slides: Slide[] = [];
+  const total = Math.max(reviews.length, testimonials.length);
+  for (let i = 0; i < total; i++) {
+    if (reviews[i]) slides.push({ kind: "google", review: reviews[i] });
+    if (testimonials[i]) slides.push({ kind: "testimonial", testimonial: testimonials[i] });
+  }
+  return slides;
+}
+
+function SlideCard({ slide }: { slide: Slide }) {
+  if (slide.kind === "testimonial") {
+    return (
+      <article className="rv-card tm-card">
+        <span className="rv-mark" aria-hidden="true">“</span>
+        <blockquote>{slide.testimonial.text}</blockquote>
+        <div className="rv-who">
+          <div>
+            <strong>Client testimonial</strong>
+          </div>
+        </div>
+      </article>
+    );
+  }
+  const { review } = slide;
+  return (
+    <article className="rv-card">
+      <span className="rv-mark" aria-hidden="true">“</span>
+      <Stars count={review.stars} />
+      <blockquote>{review.text}</blockquote>
+      <div className="rv-who">
+        <span className="rv-avatar" aria-hidden="true">{initials(review.name)}</span>
+        <div>
+          <strong>{review.name}</strong>
+          <small>{review.when}</small>
+        </div>
+        <a href={review.url} target="_blank" rel="noopener noreferrer" aria-label={`Read ${review.name}'s review on Google`}>
+          <GoogleG /> View <ArrowUpRight />
+        </a>
+      </div>
+      <details className="rv-reply">
+        <summary>Reply from ECHO TECH EVENTS</summary>
+        <p>{review.ownerReply}</p>
+      </details>
+    </article>
+  );
+}
+
+export function ReviewsSection({ reviews, testimonials }: { reviews: Review[]; testimonials: Testimonial[] }) {
   const average = reviews.reduce((sum, r) => sum + r.stars, 0) / Math.max(reviews.length, 1);
+  const slides = mix(reviews, testimonials);
 
   return (
     <section className="reviews-section" data-chapter="Share">
@@ -42,30 +94,18 @@ export function ReviewsSection({ reviews }: { reviews: Review[] }) {
         </Reveal>
       </div>
 
-      <div className="rv-grid">
-        {reviews.map((review, i) => (
-          <Reveal key={review.name} delay={i * 0.1} className="rv-reveal">
-            <article className="rv-card">
-              <span className="rv-mark" aria-hidden="true">“</span>
-              <Stars count={review.stars} />
-              <blockquote>{review.text}</blockquote>
-              <div className="rv-who">
-                <span className="rv-avatar" aria-hidden="true">{initials(review.name)}</span>
-                <div>
-                  <strong>{review.name}</strong>
-                  <small>{review.when}</small>
+      <div className="rv-viewport" role="region" aria-label="Client reviews and testimonials">
+        <div className="rv-track">
+          {[false, true].map((copy) => (
+            <div className="rv-row" key={String(copy)} aria-hidden={copy || undefined} inert={copy || undefined}>
+              {slides.map((slide, i) => (
+                <div className="rv-slide" key={i}>
+                  <SlideCard slide={slide} />
                 </div>
-                <a href={review.url} target="_blank" rel="noopener noreferrer" aria-label={`Read ${review.name}'s review on Google`}>
-                  <GoogleG /> View <ArrowUpRight />
-                </a>
-              </div>
-              <details className="rv-reply">
-                <summary>Reply from ECHO TECH EVENTS</summary>
-                <p>{review.ownerReply}</p>
-              </details>
-            </article>
-          </Reveal>
-        ))}
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

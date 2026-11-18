@@ -11,7 +11,7 @@ import { ProcessJourney } from "@/components/home/process-journey";
 import { ReviewsSection } from "@/components/home/reviews-flow";
 import { SignatureRail } from "@/components/home/signature-rail";
 import { WhyStack } from "@/components/home/why-stack";
-import { experiences, faq, featured, occasions, reviews } from "@/lib/data";
+import { experiences, faq, featured, occasions, reviews, testimonials } from "@/lib/data";
 
 const heroImages = [
   { desktop: "/hero-home-v2/brand-desktop.png", mobile: "/hero-home-v2/brand-mobile.png" },
@@ -67,7 +67,7 @@ export default function HomePage() {
 
       <ProcessJourney steps={steps} image="/hero-home-v2/delivery-desktop.png" />
 
-      <ReviewsSection reviews={reviews} />
+      <ReviewsSection reviews={reviews} testimonials={testimonials} />
 
       <section className="section faq-section" data-chapter="Echo">
         <div className="faq-title"><span className="chapter-tag">07 / Questions, answered</span><h2>Before we<br />begin.</h2><p>Have something specific in mind? Share the details and we’ll shape the right starting point.</p><Link href="/contact" className="text-link light">Ask a question <ArrowUpRight /></Link></div>

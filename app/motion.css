@@ -147,6 +147,7 @@ html:not([data-echo-ready]) .cursor { opacity: 0 !important; }
 .sig-card:hover { box-shadow: 0 30px 80px rgba(36,107,253,.22); }
 .sig-card .card-shade { z-index: 1; }
 .sig-card .pimg { z-index: 0; }
+.sig-card > video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; }
 .sig-card:hover .pimg img { transform: scale(1.05); }
 .sig-card .pimg img { transition: transform 1s var(--ease); }
 .sig-num { position: absolute; z-index: 2; top: .9rem; right: 1.2rem; font-family: var(--display); font-weight: 600; font-size: clamp(3.4rem, 5.4vw, 6rem); line-height: 1; letter-spacing: -.06em; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.55); }

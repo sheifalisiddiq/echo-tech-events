@@ -36,3 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# raw media (too large for git)
+/public/magic-selfie-mirror/

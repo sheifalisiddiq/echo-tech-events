@@ -5,6 +5,9 @@ export type Experience = {
   category: "Photo" | "Video" | "AI" | "Immersive";
   description: string;
   image: string;
+  /** Real delivered-event footage; when set, cards play it instead of the stock image. */
+  video?: string;
+  poster?: string;
   featured?: boolean;
 };
 
@@ -24,7 +27,7 @@ const photos = {
 };
 
 export const experiences: Experience[] = [
-  { slug: "magic-mirror-selfie-booth", title: "Magic Mirror Selfie Booth", shortTitle: "Magic Mirror", category: "Photo", description: "A full-length interactive mirror with guided captures and branded overlays.", image: photos.gala },
+  { slug: "magic-mirror-selfie-booth", title: "Magic Mirror Selfie Booth", shortTitle: "Magic Mirror", category: "Photo", description: "A full-length interactive mirror with guided captures and branded overlays.", image: photos.gala, video: "/magic-mirror/magic-mirror-1.mp4", poster: "/magic-mirror/magic-mirror-1-poster.jpg", featured: true },
   { slug: "dslr-candy-photo-booth", title: "DSLR Candy Photo Booth", shortTitle: "DSLR Candy", category: "Photo", description: "Studio-quality portraits from a compact, beautifully styled booth.", image: photos.camera },
   { slug: "classic-photo-booth", title: "Classic Photo Booth", shortTitle: "Classic Booth", category: "Photo", description: "A timeless open-air capture experience refined for modern events.", image: photos.light },
   { slug: "enclosed-pod-photo-booth", title: "Enclosed Pod Photo Booth", shortTitle: "Enclosed Pod", category: "Photo", description: "An intimate booth format for candid, high-energy photo moments.", image: photos.blue },
@@ -37,10 +40,11 @@ export const experiences: Experience[] = [
   { slug: "ai-face-swap-experience", title: "AI Face Swap Experience", shortTitle: "AI Face Swap", category: "AI", description: "Playful, themed transformations created for shareable guest moments.", image: photos.camera },
   { slug: "green-screen-photo-booth", title: "Green Screen Photo Booth", shortTitle: "Green Screen", category: "Immersive", description: "Transport guests into any scene with tailored digital environments.", image: photos.stage },
   { slug: "anti-gravity-photo-booth", title: "Anti Gravity Photo Booth", shortTitle: "Anti Gravity", category: "Immersive", description: "A perspective-bending set that creates impossible-looking portraits.", image: photos.light },
-  { slug: "scribble-video-booth", title: "Scribble Video Booth", shortTitle: "Scribble Video", category: "Video", description: "Hand-drawn animated accents transform short clips into lively content.", image: photos.robotic },
+  { slug: "scribble-video-booth", title: "Scribble Video Booth", shortTitle: "Scribble Video", category: "Video", description: "Hand-drawn animated accents transform short clips into lively content.", image: photos.robotic, video: "/scribble-video-1.mp4", poster: "/scribble-video-1-poster.jpg", featured: true },
 ];
 
-export const featured = experiences.filter((item) => item.featured);
+/** Featured experiences, with real-footage ones (Magic Mirror, Scribble) first. */
+export const featured = experiences.filter((item) => item.featured).sort((a, b) => Number(Boolean(b.video)) - Number(Boolean(a.video)));
 
 export const portfolioItems = [
   { title: "Corporate Gala Atmosphere", category: "Corporate", image: photos.gala },
@@ -76,6 +80,15 @@ export type Review = {
   ownerReply: string;
   url: string;
 };
+
+export type Testimonial = { text: string };
+
+/** Verbatim client testimonials (unnamed, from different clients). Not Google reviews. */
+export const testimonials: Testimonial[] = [
+  { text: "Hello thank you so much for your amazing service. This is definitely not the last time that we will be working together. On time and very professional. Thanks again," },
+  { text: "Thank you of being a part of our event. All the guests were happy of the quality of the service you provided and pictures were so professional and all my guest have given us a beautiful and wonderful feedback. I'll make sure to book you again in my next happy event." },
+  { text: "The lady which was giving the service was professional and giving the service with a smile I would like to thank her for being so delightful with the guests" },
+];
 
 /** Verbatim Google reviews of ECHO TECH EVENTS. Append new reviews here. */
 export const reviews: Review[] = [

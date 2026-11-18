@@ -4,11 +4,12 @@ import Image from "next/image";
 import { useRef } from "react";
 import { AutoplayVideo } from "@/components/autoplay-video";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { scribbleBooth } from "@/lib/client-work";
+import { scribbleBooth, type ClientWorkSet } from "@/lib/client-work";
+
+const pad = (n: number) => String(n).padStart(2, "0");
 
 /** Animated portfolio: pinned horizontal reel on desktop, then screens that fly in on scroll. */
-export function ClientWork() {
-  const work = scribbleBooth;
+export function ClientWork({ work = scribbleBooth }: { work?: ClientWorkSet }) {
   const root = useRef<HTMLElement>(null);
   const pin = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -38,7 +39,7 @@ export function ClientWork() {
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               if (bar.current) bar.current.style.transform = `scaleX(${self.progress})`;
-              if (count.current) count.current.textContent = `0${Math.min(total, Math.floor(self.progress * total) + 1)} / 0${total}`;
+              if (count.current) count.current.textContent = `${pad(Math.min(total, Math.floor(self.progress * total) + 1))} / ${pad(total)}`;
             },
           },
         });
@@ -87,7 +88,7 @@ export function ClientWork() {
   );
 
   return (
-    <section className="client-work" data-chapter="Selected work" ref={root}>
+    <section className="client-work" data-chapter={work.chapter ?? "Selected work"} ref={root}>
       <div className="client-pin" ref={pin}>
         <div className="client-track" ref={track}>
           <div className="client-intro">
@@ -99,7 +100,7 @@ export function ClientWork() {
             </h2>
             <p>{work.description}</p>
             <div className="client-progress" aria-hidden="true">
-              <span ref={count}>{`01 / 0${work.videos.length}`}</span>
+              <span ref={count}>{`01 / ${pad(work.videos.length)}`}</span>
               <i><span ref={bar} /></i>
               <em>Scroll →</em>
             </div>
@@ -111,16 +112,21 @@ export function ClientWork() {
           ))}
         </div>
       </div>
-      <div className="client-shots-wrap">
-        <span className="chapter-tag">Guest-facing screens</span>
-        <div className="client-shots">
-          {work.images.map((img) => (
-            <figure className="client-tile" key={img.src}>
-              <Image src={img.src} alt={img.title} width={img.width} height={img.height} sizes="(max-width: 760px) 50vw, 20vw" />
-            </figure>
-          ))}
+      {work.images.length > 0 && (
+        <div className="client-shots-wrap">
+          <span className="chapter-tag">{work.imagesLabel ?? "Guest-facing screens"}</span>
+          <div
+            className={work.images.length < 4 ? "client-shots is-few" : "client-shots"}
+            style={{ "--n": work.images.length } as React.CSSProperties}
+          >
+            {work.images.map((img) => (
+              <figure className="client-tile" key={img.src}>
+                <Image src={img.src} alt={img.title} width={img.width} height={img.height} sizes="(max-width: 760px) 50vw, 20vw" />
+              </figure>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }

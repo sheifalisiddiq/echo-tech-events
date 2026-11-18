@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PortfolioFilter } from "@/components/portfolio-filter";
 import { ClientWork } from "@/components/client-work";
+import { magicMirror } from "@/lib/client-work";
 
 export const metadata: Metadata = { title: "Portfolio", description: "Explore the visual direction for ECHO TECH EVENTS projects across corporate, brand, government and private events." };
 
@@ -17,8 +18,9 @@ export default function PortfolioPage() {
         <span className="page-number">P / 06</span>
       </section>
       <ClientWork />
+      <ClientWork work={magicMirror} />
       <section className="section light-section portfolio-page"><PortfolioFilter/></section>
-      <section className="portfolio-disclosure"><span>Transparency note</span><p>Scribble Booth media is from a delivered client event. Items tagged “Demo concept” are placeholder imagery. No client names, results or testimonials have been invented.</p></section>
+      <section className="portfolio-disclosure"><span>Transparency note</span><p>Scribble Booth and Magic Mirror media is from delivered client events. Items tagged “Demo concept” are placeholder imagery. No client names, results or testimonials have been invented.</p></section>
       <section className="mini-cta"><p>Picture your event here.</p><h2>Let’s create the<br/>next standout frame.</h2><Link href="/contact" className="button button-light">Start an enquiry <ArrowUpRight /></Link></section>
     </>
   );
