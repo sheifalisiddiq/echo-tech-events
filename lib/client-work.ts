@@ -48,6 +48,15 @@ export const magicMirror: ClientWorkSet = {
   images: [{ src: "/magic-mirror/magic-mirror-shot-1.webp", width: 1280, height: 1706, title: "Magic Mirror at a delivered event" }],
 };
 
+/** Portfolio sections show the first 2 videos + first photo; the rest appears in "More footage" below them. */
+export const PREVIEW_VIDEOS = 2;
+export const PREVIEW_IMAGES = 1;
+export const portfolioPreview = (w: ClientWorkSet): ClientWorkSet => ({
+  ...w,
+  videos: w.videos.slice(0, PREVIEW_VIDEOS),
+  images: w.images.slice(0, PREVIEW_IMAGES),
+});
+
 /**
  * Experiences that have real footage, keyed by experience slug. This is the single source of truth:
  * the home rail, the booth pages and the Portfolio category row all read from it. To add a booth,

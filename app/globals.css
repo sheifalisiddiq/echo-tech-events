@@ -520,6 +520,10 @@ h1,h2,h3,p { margin-top: 0; }
 .booth-card .card-arrow { top: 1.2rem; right: 1.2rem; bottom: auto; }
 .booth-card:hover .card-arrow { background: #fff; color: #000; transform: rotate(45deg); }
 .client-see-all { padding: 1.5rem var(--gutter) 0; }
+.portfolio-more { padding: clamp(2.5rem, 6vw, 5rem) var(--gutter); }
+.portfolio-more-group { margin-top: clamp(2rem, 4vw, 3.5rem); }
+.portfolio-more-group h3 { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 3.2rem); line-height: .95; letter-spacing: -.045em; text-transform: uppercase; margin: 0 0 1.5rem; }
+.portfolio-more-group .client-shots { margin-top: var(--grid-gap); }
 @media (max-width: 760px) { .browse-booths-grid { grid-template-columns: minmax(0, 1fr); } }
 .sig-meter[hidden] { display: none; }
 

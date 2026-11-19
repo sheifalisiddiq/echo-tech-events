@@ -5,7 +5,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { PortfolioFilter } from "@/components/portfolio-filter";
 import { ClientWork } from "@/components/client-work";
-import { magicMirror, scribbleBooth, workBySlug } from "@/lib/client-work";
+import { VideoGallery } from "@/components/video-gallery";
+import { magicMirror, portfolioPreview, PREVIEW_IMAGES, PREVIEW_VIDEOS, scribbleBooth, workBySlug } from "@/lib/client-work";
 
 export const metadata: Metadata = { title: "Portfolio", description: "Explore the visual direction for ECHO TECH EVENTS projects across corporate, brand, government and private events." };
 
@@ -36,10 +37,31 @@ export default function PortfolioPage() {
           ))}
         </div>
       </section>
-      <ClientWork />
-      <p className="client-see-all"><Link href="/experiences/scribble-video-booth" className="text-link light">See all {scribbleBooth.videos.length} {scribbleBooth.title} videos <ArrowUpRight /></Link></p>
-      <ClientWork work={magicMirror} />
-      <p className="client-see-all"><Link href="/experiences/magic-mirror-selfie-booth" className="text-link light">See all {magicMirror.videos.length} {magicMirror.title} videos <ArrowUpRight /></Link></p>
+      <ClientWork work={portfolioPreview(scribbleBooth)} />
+      <ClientWork work={portfolioPreview(magicMirror)} />
+      <section className="portfolio-more" aria-label="More footage">
+        <span className="chapter-tag">More footage</span>
+        {[scribbleBooth, magicMirror].map((work) => {
+          const videos = work.videos.slice(PREVIEW_VIDEOS);
+          const images = work.images.slice(PREVIEW_IMAGES);
+          if (!videos.length && !images.length) return null;
+          return (
+            <div className="portfolio-more-group" key={work.title}>
+              <h3>{work.title}</h3>
+              {videos.length > 0 && <VideoGallery videos={videos} />}
+              {images.length > 0 && (
+                <div className={images.length < 4 ? "client-shots is-few" : "client-shots"} style={{ "--n": images.length } as React.CSSProperties}>
+                  {images.map((img) => (
+                    <figure className="client-tile" key={img.src}>
+                      <Image src={img.src} alt={img.title} width={img.width} height={img.height} sizes="(max-width: 760px) 50vw, 20vw" />
+                    </figure>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </section>
       <section className="section light-section portfolio-page"><PortfolioFilter/></section>
       <section className="portfolio-disclosure"><span>Transparency note</span><p>Scribble Booth and Magic Mirror media is from delivered client events. Items tagged “Demo concept” are placeholder imagery. No client names, results or testimonials have been invented.</p></section>
       <section className="mini-cta"><p>Picture your event here.</p><h2>Let’s create the<br/>next standout frame.</h2><Link href="/contact" className="button button-light">Start an enquiry <ArrowUpRight /></Link></section>
